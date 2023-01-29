@@ -1,9 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import styles from '/TaskList.module.css'
+import styles from './TaskList.module.css'
 
 export function TaskList() {
   const [tasks, setTasks] = useState(['Acordar cedo'])
   const [newTaskText, setNewTaskText] = useState('')
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  const strikethroughClass = isCompleted ? styles.strikethrough : '';
 
   function handleCreateNewTask(event: FormEvent) {
     event?.preventDefault()
@@ -14,6 +17,10 @@ export function TaskList() {
 
   function handleNewTaskChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setNewTaskText(event.target.value)
+  }
+
+  function handleTaskCompleted() {
+    setIsCompleted(true);
   }
 
   return (
@@ -33,8 +40,15 @@ export function TaskList() {
       <p>Concluidas</p>
     </div>
 
-    <div>
-      {tasks.map(task => <p>{task}</p>)}
+    <div className={styles.taskList}>
+      {tasks.map(task => {
+        return (
+          <>
+          <input type="checkbox" defaultChecked={isCompleted} onClick={handleTaskCompleted}/>
+          <p className={`${strikethroughClass}`}>{task}</p>
+          </>
+        )
+      })}
     </div>
     </>
   )
