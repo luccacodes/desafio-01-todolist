@@ -1,26 +1,28 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { ITask } from '../App';
+import { Task } from './Task';
 import styles from './TaskList.module.css'
 
-export function TaskList() {
-  const [tasks, setTasks] = useState(['Acordar cedo'])
-  const [newTaskText, setNewTaskText] = useState('')
-  const [isCompleted, setIsCompleted] = useState(false);
+interface TaskProps {
+  tasks: ITask[];
+}
 
-  const strikethroughClass = isCompleted ? styles.strikethrough : '';
+export function TaskList({ tasks }: TaskProps) {
+  const [newTaskText, setNewTaskText] = useState('')
+  // const [isCompleted, setIsCompleted] = useState(false);
+  // const strikethroughClass = isCompleted ? styles.strikethrough : '';
+
+  const completedTasks = tasks.filter((task) => task.isCompleted).length;
 
   function handleCreateNewTask(event: FormEvent) {
     event?.preventDefault()
 
-    setTasks([...tasks, newTaskText])
+    // setTasks([...tasks, newTaskText])
     setNewTaskText('')
   }
 
   function handleNewTaskChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setNewTaskText(event.target.value)
-  }
-
-  function handleTaskCompleted() {
-    setIsCompleted(true);
   }
 
   return (
@@ -36,19 +38,19 @@ export function TaskList() {
     </form>
 
     <div>
-      <p>Tarefas criadas {tasks.length}</p>
-      <p>Concluidas</p>
+      <p>Tarefas criadas</p>
+      <span>{tasks.length}</span>
+    </div>
+
+    <div>
+      <p>Concluídas</p>
+      <span>{completedTasks} de {tasks.length}</span>
     </div>
 
     <div className={styles.taskList}>
-      {tasks.map(task => {
-        return (
-          <>
-          <input type="checkbox" defaultChecked={isCompleted} onClick={handleTaskCompleted}/>
-          <p className={`${strikethroughClass}`}>{task}</p>
-          </>
-        )
-      })}
+      {tasks.map(task => (
+        <Task key={task.id} task={task}/>
+      ))}
     </div>
     </>
   )
