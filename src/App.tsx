@@ -4,19 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { TaskList } from './components/TaskList';
 import './global.css';
 
-const tasks = [
-  {
-    id: uuidv4(),
-    title: 'Terminar o desafio',
-    isCompleted: false
-  },
-  {
-    id: uuidv4(),
-    title: 'Acordar cedo',
-    isCompleted: true
-  }
-]
-
 export interface ITask {
   id: string;
   title: string;
@@ -29,13 +16,29 @@ function App() {
       id: uuidv4(),
       title: 'teste',
       isCompleted: false
+    },
+    {
+      id: uuidv4(),
+      title: 'teste 2',
+      isCompleted: true
     }
   ])
+
+  function addTask(taskTitle: string) {
+    setTasks([
+      ...tasks,
+      {
+        id: uuidv4(),
+        title: taskTitle,
+        isCompleted: false
+      }
+    ])
+  }
 
   return (
     <>
     <h1>todo</h1>
-    <TaskList tasks={tasks} />
+    <TaskList onAddTask={addTask} tasks={tasks} />
     </>
   )
 }

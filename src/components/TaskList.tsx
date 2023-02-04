@@ -5,33 +5,34 @@ import styles from './TaskList.module.css'
 
 interface TaskProps {
   tasks: ITask[];
+  onAddTask: (taskTitle: string) => void;
 }
 
-export function TaskList({ tasks }: TaskProps) {
-  const [newTaskText, setNewTaskText] = useState('')
+export function TaskList({ onAddTask, tasks }: TaskProps) {
+  const [newTaskTitle, setNewTaskTitle] = useState('')
   // const [isCompleted, setIsCompleted] = useState(false);
   // const strikethroughClass = isCompleted ? styles.strikethrough : '';
 
   const completedTasks = tasks.filter((task) => task.isCompleted).length;
 
-  function handleCreateNewTask(event: FormEvent) {
+  function handleSubmit(event: FormEvent) {
     event?.preventDefault()
-
-    // setTasks([...tasks, newTaskText])
-    setNewTaskText('')
+    
+    onAddTask(newTaskTitle)
+    setNewTaskTitle('')
   }
 
   function handleNewTaskChange(event: ChangeEvent<HTMLTextAreaElement>) {
-    setNewTaskText(event.target.value)
+    setNewTaskTitle(event.target.value)
   }
 
   return (
     <>
-    <form onSubmit={handleCreateNewTask}>
+    <form onSubmit={handleSubmit}>
       <textarea
         name="task"
         placeholder="Adicione uma nova tarefa"
-        value={newTaskText}
+        value={newTaskTitle}
         onChange={handleNewTaskChange}
       />
       <button type="submit">Criar</button>
