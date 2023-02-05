@@ -35,10 +35,15 @@ function App() {
     ])
   }
 
+  function deleteTaskById(taskId: string) {
+    const tasksWithoutDeletedOne = tasks.filter(task => task.id !== taskId);
+    setTasks(tasksWithoutDeletedOne);
+  }
+
   return (
     <>
     <h1>todo</h1>
-    <TaskList onAddTask={addTask} tasks={tasks} />
+    <TaskList onAddTask={addTask} onDeleteTask={deleteTaskById} tasks={tasks} />
     </>
   )
 }

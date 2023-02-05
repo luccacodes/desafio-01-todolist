@@ -6,9 +6,10 @@ import styles from './TaskList.module.css'
 interface TaskProps {
   tasks: ITask[];
   onAddTask: (taskTitle: string) => void;
+  onDeleteTask: (taskId: string) => void;
 }
 
-export function TaskList({ onAddTask, tasks }: TaskProps) {
+export function TaskList({ tasks, onAddTask, onDeleteTask }: TaskProps) {
   const [newTaskTitle, setNewTaskTitle] = useState('')
   // const [isCompleted, setIsCompleted] = useState(false);
   // const strikethroughClass = isCompleted ? styles.strikethrough : '';
@@ -18,11 +19,11 @@ export function TaskList({ onAddTask, tasks }: TaskProps) {
   function handleSubmit(event: FormEvent) {
     event?.preventDefault()
     
-    onAddTask(newTaskTitle)
-    setNewTaskTitle('')
+    onAddTask(newTaskTitle);
+    setNewTaskTitle('');
   }
 
-  function handleNewTaskChange(event: ChangeEvent<HTMLTextAreaElement>) {
+  function handleNewTaskTitle(event: ChangeEvent<HTMLTextAreaElement>) {
     setNewTaskTitle(event.target.value)
   }
 
@@ -33,7 +34,7 @@ export function TaskList({ onAddTask, tasks }: TaskProps) {
         name="task"
         placeholder="Adicione uma nova tarefa"
         value={newTaskTitle}
-        onChange={handleNewTaskChange}
+        onChange={handleNewTaskTitle}
       />
       <button type="submit">Criar</button>
     </form>
@@ -50,7 +51,7 @@ export function TaskList({ onAddTask, tasks }: TaskProps) {
 
     <div className={styles.taskList}>
       {tasks.map(task => (
-        <Task key={task.id} task={task}/>
+        <Task key={task.id} task={task} onDeleteTask={onDeleteTask}/>
       ))}
     </div>
     </>
