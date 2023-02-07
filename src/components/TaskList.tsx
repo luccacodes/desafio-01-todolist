@@ -7,9 +7,10 @@ interface TaskProps {
   tasks: ITask[];
   onAddTask: (taskTitle: string) => void;
   onDeleteTask: (taskId: string) => void;
+  onCompleteTask: (taskId: string) => void;
 }
 
-export function TaskList({ tasks, onAddTask, onDeleteTask }: TaskProps) {
+export function TaskList({ tasks, onAddTask, onDeleteTask, onCompleteTask }: TaskProps) {
   const [newTaskTitle, setNewTaskTitle] = useState('')
   // const [isCompleted, setIsCompleted] = useState(false);
   // const strikethroughClass = isCompleted ? styles.strikethrough : '';
@@ -51,7 +52,12 @@ export function TaskList({ tasks, onAddTask, onDeleteTask }: TaskProps) {
 
     <div className={styles.taskList}>
       {tasks.map(task => (
-        <Task key={task.id} task={task} onDeleteTask={onDeleteTask}/>
+        <Task
+          key={task.id}
+          task={task}
+          onDeleteTask={onDeleteTask}
+          onCompleteTask={onCompleteTask}
+        />
       ))}
     </div>
     </>

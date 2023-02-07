@@ -1,3 +1,28 @@
+.checkContainer {
+  min-width: 1.125rem;
+  height: 1.125rem;
+  background: none;
+  border: none;
+}
+
+.checkContainer div {
+  width: 100%;
+  height: 100%;
+  border: 2px solid blue;
+  border-radius: 50%;
+}
+
+.checkContainer svg {
+  width: 100%;
+  height: 100%;
+  color: purple;
+}
+
 .task {
   margin-top: 1rem;
+}
+
+p.textCompleted {
+  color: gray;
+  text-decoration: line-through;
 }
