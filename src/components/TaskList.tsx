@@ -12,8 +12,6 @@ interface TaskProps {
 
 export function TaskList({ tasks, onAddTask, onDeleteTask, onCompleteTask }: TaskProps) {
   const [newTaskTitle, setNewTaskTitle] = useState('')
-  // const [isCompleted, setIsCompleted] = useState(false);
-  // const strikethroughClass = isCompleted ? styles.strikethrough : '';
 
   const completedTasks = tasks.filter((task) => task.isCompleted).length;
 
@@ -59,6 +57,15 @@ export function TaskList({ tasks, onAddTask, onDeleteTask, onCompleteTask }: Tas
           onCompleteTask={onCompleteTask}
         />
       ))}
+
+      {tasks.length <= 0 && (
+        <section>
+          <div>
+            <p>Você ainda não tem tarefas cadastradas</p>
+            <span>Crie tarefas e organize seus itens a fazer</span>
+          </div>
+        </section>
+      )}
     </div>
     </>
   )
