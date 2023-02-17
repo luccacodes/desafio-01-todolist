@@ -1,7 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { ITask } from '../App';
 import { Task } from './Task';
+
 import styles from './TaskList.module.css'
+
+import { AiOutlinePlusCircle } from 'react-icons/ai'
 
 interface TaskProps {
   tasks: ITask[];
@@ -22,51 +25,58 @@ export function TaskList({ tasks, onAddTask, onDeleteTask, onCompleteTask }: Tas
     setNewTaskTitle('');
   }
 
-  function handleNewTaskTitle(event: ChangeEvent<HTMLTextAreaElement>) {
+  function handleNewTaskTitle(event: ChangeEvent<HTMLInputElement>) {
     setNewTaskTitle(event.target.value)
   }
 
   return (
-    <>
-    <form onSubmit={handleSubmit}>
-      <textarea
-        name="task"
-        placeholder="Adicione uma nova tarefa"
-        value={newTaskTitle}
-        onChange={handleNewTaskTitle}
-      />
-      <button type="submit">Criar</button>
-    </form>
-
-    <div>
-      <p>Tarefas criadas</p>
-      <span>{tasks.length}</span>
-    </div>
-
-    <div>
-      <p>Concluídas</p>
-      <span>{completedTasks} de {tasks.length}</span>
-    </div>
-
-    <div className={styles.taskList}>
-      {tasks.map(task => (
-        <Task
-          key={task.id}
-          task={task}
-          onDeleteTask={onDeleteTask}
-          onCompleteTask={onCompleteTask}
+    <section className={styles.mainSection}>
+      <form onSubmit={handleSubmit} className={styles.newTaskForm}>
+        <input
+          type="text"
+          placeholder="Adicione uma nova tarefa"
+          value={newTaskTitle}
+          onChange={handleNewTaskTitle}
         />
-      ))}
+        <button type="submit">
+          Criar
+          <AiOutlinePlusCircle size={20} />
+        </button>
+      </form>
 
-      {tasks.length <= 0 && (
-        <section>
+      <section className={styles.tasks}>
+        <header className={styles.header}>
           <div>
-            <p>Você ainda não tem tarefas cadastradas</p>
-            <span>Crie tarefas e organize seus itens a fazer</span>
+            <p>Tarefas criadas</p>
+            <span>{tasks.length}</span>
           </div>
-        </section>
-      )}
-    </div>
-    </>
+
+          <div>
+            <p className={styles.textPurple}>Concluídas</p>
+            <span>{completedTasks} de {tasks.length}</span>
+          </div>
+        </header>
+
+        <div className={styles.taskList}>
+          {tasks.map(task => (
+            <Task
+              key={task.id}
+              task={task}
+              onDeleteTask={onDeleteTask}
+              onCompleteTask={onCompleteTask}
+            />
+          ))}
+
+          {tasks.length <= 0 && (
+            <section>
+              <div>
+                <p>Você ainda não tem tarefas cadastradas</p>
+                <span>Crie tarefas e organize seus itens a fazer</span>
+              </div>
+            </section>
+          )}
+        </div>
+      </section>
+    </section>
   )
 }

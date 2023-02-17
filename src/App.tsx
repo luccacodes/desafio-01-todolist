@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { TaskList } from './components/TaskList';
-import './global.css';
-
+import { Header } from './components/Header';
 export interface ITask {
   id: string;
   title: string;
@@ -56,7 +55,7 @@ function App() {
 
   return (
     <>
-    <h1>todo</h1>
+    <Header />
     <TaskList
       tasks={tasks} 
       onAddTask={addTask}
