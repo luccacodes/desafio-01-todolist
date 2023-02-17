@@ -5,6 +5,7 @@ import { Task } from './Task';
 import styles from './TaskList.module.css'
 
 import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { TbClipboardText } from 'react-icons/tb'
 
 interface TaskProps {
   tasks: ITask[];
@@ -68,7 +69,8 @@ export function TaskList({ tasks, onAddTask, onDeleteTask, onCompleteTask }: Tas
           ))}
 
           {tasks.length <= 0 && (
-            <section>
+            <section className={styles.empty}>
+              <TbClipboardText size={50} />
               <div>
                 <p>Você ainda não tem tarefas cadastradas</p>
                 <span>Crie tarefas e organize seus itens a fazer</span>
